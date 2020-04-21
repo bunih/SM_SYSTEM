@@ -1,0 +1,85 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+            {% include 'layouts/partials/inc/msg.html'%}
+        <div class="col-md-6">
+            <div class="text-center">
+                 
+
+
+                <h3>
+                     {{user.first_name }} <span class="font-weight-light">{{request.user.last_name }}</span>
+                </h3>
+                <div class="h5 font-weight-300">
+                    {{request.user.profile.location }} 
+                </div>
+                <div class="h5 mt-4">
+                    CONIC BRAND
+                </div>
+                <br>
+                <div>
+                    <ul class="unstyled">
+                        {{request.user.profile.status }} <br>
+                        {{request.user.profile.phone }} 
+                    </ul>
+
+                    <ul class="unstyled">
+                        <li><a href="/admin" class="btn btn-primary">ADMIN PANEL</a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+           
+
+        </div>
+        <div class="col-md-6">
+                 {% if user.profile.profile %}
+                 <a href="#">
+                        <img src="{{user.profile.profile.url}}" height="200px" width="200px" class="img-circle">
+                       </a> <br>
+                 {% else %}
+                       <a href="#">
+                        <img src="/media/images/users/default/she.png" height="200px" width="200px" class="img-circle">
+                       </a> <br>
+                 {% endif  %}
+
+               
+        
+
+
+
+
+           <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %} <br>
+           <div class="form-group ">
+            <label for="file">Change Profile</label>
+            <input type="file" name="upload" id="file" class="btn btn-sm btn-primary mr-4 "> <br>
+            <input type="hidden" name="status" value="{{request.user.profile.status }}">
+            <input type="text" class="form-control" name="location" value="{{user.profile.location }}" placeholder="Your Location"> <br>
+            <input type="text" class="form-control" name="phone" value="{{user.profile.phone }} "  placeholder="Your Phone">
+           </div>
+            <input type="submit" value="upload profile" class="btn btn-primary">
+
+           </form>
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+    <hr class="my-4" />
+
+
+
+
+</div>
+{% endblock %}
